@@ -30,7 +30,7 @@ class Handler(FileSystemEventHandler):
         self.files_created_main = 0
         paths_chunks = install_path.split('\\')
         self.program_path = '\\'.join(paths_chunks)
-
+        self.sus_events = {}
     def on_created(self, event):
        self.handle_moved_create(event.src_path, event)
                       
@@ -39,6 +39,14 @@ class Handler(FileSystemEventHandler):
     
         self.handle_moved_create(event.dest_path, event)
 
+    def on_modified(self, event):
+        path = event.src_path
+        self.sus_events['hosts.txt modified'] = (
+        'The hosts file was modified. This can be used to block or redirect internet access.'
+)
+
+              
+    
     def handle_moved_create(self, path, event):
         self.path = path
         

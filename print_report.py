@@ -15,6 +15,13 @@ def get_report(handler):
         for key, val in sus_files.items():
             print(f'{key} {val['type']}  {val['path']}          {val['program']}')
 
+    if handler.sus_events:
+        print(f'\nSuspicious Events : {len(handler.sus_events)}')
+        print('===========================================')
+        print('Idx    reason            description \n')
+        for idx, (key, val) in enumerate(handler.sus_events.items()):
+            print(f'{idx}      {key}        {val}')
+
     files_per_dir = walk_dirs(folders)
     print(f'\n\nFolders created : {folders_length}')
     print('===========================================')    
