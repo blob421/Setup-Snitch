@@ -1,6 +1,6 @@
 os_paths = {'\\AppData\\Local\\Microsoft\\' :  ['loggz', 'odlgz', 'json', 'dat', 'tmp', 'log', 
                                                 'ini', 'xml', 'txt','db', 'sqlite', 'vscdb','png', 
-                                                'jpg', 'jpeg', 'TMP' ,'ldb', 'sst'], 
+                                                'jpg', 'jpeg', 'TMP' ,'ldb', 'sst', ''], 
 
             '\\AppData\\Local\\D3DSCache\\': ['bin', 'dat', 'tmp'],
 

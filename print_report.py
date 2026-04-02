@@ -33,5 +33,5 @@ def get_report(handler):
         print('Idx  count   path\n')
         for idx, (key, val) in enumerate(outside.items()):
 
-            print(f'{idx}  {val}  {key}')
+            print(f' {idx}    {val}     {key}')
 

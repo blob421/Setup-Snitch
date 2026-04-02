@@ -2,18 +2,7 @@
 from watchdog.events import FileSystemEventHandler
 from os_paths import os_paths, SUSPICIOUS_EXTS
 import psutil
-import os
-import sys
-
-def get_program_path():
-    if getattr(sys, 'frozen', False):
-        # Running as EXE
-        return os.path.dirname(sys.executable)
-    else:
-        # Running as script
-        return os.path.dirname(__file__)
-
-PROGRAM_PATH = get_program_path()
+import os 
 
 def match_os_path(file_path):
     for folder, ext_list in os_paths.items():
@@ -34,14 +23,24 @@ def get_recent_writers(path):
 
   
 class Handler(FileSystemEventHandler):
-    def __init__(self):
+    def __init__(self, install_path):
         self.suspicious_paths = {}
         self.written_paths = []
         self.created_folders = []
         self.files_created_main = 0
+        paths_chunks = install_path.split('\\')
+        self.program_path = '\\'.join(paths_chunks)
 
     def on_created(self, event):
-        self.path = event.src_path
+       self.handle_moved_create(event.src_path, event)
+                      
+
+    def on_moved(self, event):
+    
+        self.handle_moved_create(event.dest_path, event)
+
+    def handle_moved_create(self, path, event):
+        self.path = path
         
         self.ext = self.path.split('.')[-1] or '???'
         
@@ -49,7 +48,7 @@ class Handler(FileSystemEventHandler):
         if event.is_directory:
             self.created_folders.append(self.path)
 
-        elif PROGRAM_PATH in self.path:
+        elif self.program_path in self.path:
             self.files_created_main += 1
 
         else:
@@ -72,8 +71,6 @@ class Handler(FileSystemEventHandler):
                       dirname = '\\'.join(dirparts)
                      
                       self.written_paths.append(dirname)
-                      
-
 
     def handle_sus(self):
          
