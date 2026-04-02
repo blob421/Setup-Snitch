@@ -12,7 +12,7 @@ handler = Handler()
 
 observer.schedule(handler, observed_path, recursive=True)
 observer.start()
-print('\nWELCOME TO DISK WATCHER')
+print('\nWELCOME TO SETUP SNITCH')
 print('=======================')
 try:
     print('Watcher starting ...')

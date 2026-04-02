@@ -5,7 +5,7 @@ import os
     object => {path: file_count}
 """ 
 def walk_dirs(dirs):
-
+  
     files_per_dir = {}
     dir_map = {}
     for d in dirs:

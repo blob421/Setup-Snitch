@@ -1,42 +1,81 @@
 
 from watchdog.events import FileSystemEventHandler
+from os_paths import os_paths, SUSPICIOUS_EXTS
+import psutil
+import os
+import sys
 
+def get_program_path():
+    if getattr(sys, 'frozen', False):
+        # Running as EXE
+        return os.path.dirname(sys.executable)
+    else:
+        # Running as script
+        return os.path.dirname(__file__)
 
-paths_used_by_os = ['\\AppData\\Local\\D3DSCache\\', 
-                    '\\AppData\\Local\\Microsoft\\Edge\\',
-                    '\\AppData\\Local\\Temp\\']
+PROGRAM_PATH = get_program_path()
 
+def match_os_path(file_path):
+    for folder, ext_list in os_paths.items():
+        if folder in file_path:
+            return ext_list
+    return None
 
-def is_suspicious(string):
-     extension = string.split('.')[-1]
-     if extension in ['exe', 'dll', 'bat', 'ps1']:
-         return extension
-     else:
-         return None
-     
+def get_recent_writers(path):
+    writers = []
+    for p in psutil.process_iter(['pid', 'name', 'open_files']):
+        try:
+            for f in p.info['open_files'] or []:
+                if f.path == path:
+                    writers.append(p.info['name'])
+        except:
+            pass
+    return writers
 
+  
 class Handler(FileSystemEventHandler):
     def __init__(self):
         self.suspicious_paths = {}
-        self.written_paths = {}
+        self.written_paths = []
         self.created_folders = []
-        
+        self.files_created_main = 0
 
     def on_created(self, event):
-        event_path = event.src_path
-        in_active_paths = False
-
-        if event.is_directory:
-            self.created_folders.append(event_path)
+        self.path = event.src_path
         
+        self.ext = self.path.split('.')[-1] or '???'
+        
+        
+        if event.is_directory:
+            self.created_folders.append(self.path)
+
+        elif PROGRAM_PATH in self.path:
+            self.files_created_main += 1
+
         else:
-            
-            for p in paths_used_by_os:
-                if p in event_path:
-                    in_active_paths = True
-                    extension = is_suspicious(event_path)
-                    if extension: 
-                        self.suspicious_paths[f'{len(self.suspicious_paths.keys())}'] = {'type': extension, 
-                                                                                         'path': event_path}
-                        print(f'\nSuspicious file created: {event_path}')
-                        break 
+            self.writters = get_recent_writers(self.path) or '???'
+                 
+            self.sus_len = len(self.suspicious_paths)
+            extensions = match_os_path(self.path)
+
+
+            if extensions:  ### HANDLE FILES WRITTEN IN SYSTEM DIRS 
+                  if not self.ext in extensions:
+                        self.handle_sus()
+            else:
+                       ### HANDLE FILES WRITTEN ANYWHERE ELSE AND SUS
+                 if self.ext in SUSPICIOUS_EXTS:
+                      self.handle_sus()
+
+                 else: ### HANDLE FILES WRITTEN ANYWHERE ELSE BUT NOT SUS, save their dir names
+                      dirparts = self.path.split('\\')[0:-1]
+                      dirname = '\\'.join(dirparts)
+                     
+                      self.written_paths.append(dirname)
+                      
+
+
+    def handle_sus(self):
+         
+                    self.suspicious_paths[self.sus_len] = {'path': self.path, 'type': self.ext, 
+                                                           'program': self.writters}
