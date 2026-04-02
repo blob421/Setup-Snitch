@@ -1,8 +1,7 @@
 
 from watchdog.events import FileSystemEventHandler
 from os_paths import os_paths, SUSPICIOUS_EXTS
-import psutil
-import os 
+import time
 
 def match_os_path(file_path):
     for folder, ext_list in os_paths.items():
@@ -10,18 +9,8 @@ def match_os_path(file_path):
             return ext_list
     return None
 
-def get_recent_writers(path):
-    writers = []
-    for p in psutil.process_iter(['pid', 'name', 'open_files']):
-        try:
-            for f in p.info['open_files'] or []:
-                if f.path == path:
-                    writers.append(p.info['name'])
-        except:
-            pass
-    return writers
 
-  
+
 class Handler(FileSystemEventHandler):
     def __init__(self, install_path):
         self.suspicious_paths = {}
@@ -31,6 +20,7 @@ class Handler(FileSystemEventHandler):
         paths_chunks = install_path.split('\\')
         self.program_path = '\\'.join(paths_chunks)
         self.sus_events = {}
+        
     def on_created(self, event):
        self.handle_moved_create(event.src_path, event)
                       
@@ -41,9 +31,10 @@ class Handler(FileSystemEventHandler):
 
     def on_modified(self, event):
         path = event.src_path
-        self.sus_events['hosts.txt modified'] = (
-        'The hosts file was modified. This can be used to block or redirect internet access.'
-)
+        if "System32\\drivers\\etc\\hosts" in path:
+            self.sus_events['hosts modified'] = (
+            'The hosts file was modified. This can be used to block or redirect internet access.'
+    )
 
               
     
@@ -52,7 +43,7 @@ class Handler(FileSystemEventHandler):
         
         self.ext = self.path.split('.')[-1] or '???'
         
-        
+        time.sleep(0.05)
         if event.is_directory:
             self.created_folders.append(self.path)
 
@@ -60,7 +51,7 @@ class Handler(FileSystemEventHandler):
             self.files_created_main += 1
 
         else:
-            self.writters = get_recent_writers(self.path) or '???'
+          
                  
             self.sus_len = len(self.suspicious_paths)
             extensions = match_os_path(self.path)
@@ -83,4 +74,4 @@ class Handler(FileSystemEventHandler):
     def handle_sus(self):
          
                     self.suspicious_paths[self.sus_len] = {'path': self.path, 'type': self.ext, 
-                                                           'program': self.writters}
+                                                           }

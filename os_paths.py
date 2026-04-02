@@ -1,6 +1,7 @@
 os_paths = {'\\AppData\\Local\\Microsoft\\' :  ['loggz', 'odlgz', 'json', 'dat', 'tmp', 'log', 
                                                 'ini', 'xml', 'txt','db', 'sqlite', 'vscdb','png', 
-                                                'jpg', 'jpeg', 'TMP' ,'ldb', 'sst', ''], 
+                                                'jpg', 'jpeg', 'TMP' ,'ldb', 'sst', '', 
+                                                'Persistent State', 'tbres'], 
 
             '\\AppData\\Local\\D3DSCache\\': ['bin', 'dat', 'tmp'],
 
@@ -9,13 +10,14 @@ os_paths = {'\\AppData\\Local\\Microsoft\\' :  ['loggz', 'odlgz', 'json', 'dat',
                                          'jpeg'],
                                          
             '\\AppData\\Local\\Packages\\' : ['json', 'dat', 'tmp', 'log','xml', 'ini', 'txt',
-                                              'db', 'sqlite','png', 'jpg', 'jpeg', 'db-wal', 'db-shm'],
+                                              'db', 'sqlite','png', 'jpg', 'jpeg', 'db-wal', 
+                                              'db-shm', 'bin', 'bak', 'TMP'],
 
             '\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\': ['tmp', 'dmp', 'wer'],
 
             '\\ProgramData\\regid.1991-06.com.microsoft\\': ['xml', 'xrm-ms', 'dat'],
 
-            '\\System32': ['log'],
+            '\\System32': ['log', 'blf', 'regtrans-ms'],
 }
 
 SUSPICIOUS_EXTS = [

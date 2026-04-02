@@ -27,7 +27,7 @@ observer.start()
 
 
 try:
-    print('Watcher starting ...')
+    print('\nWatcher starting ...')
     print('Press "ctrl + c" when you are done to print your report')
     while True:
         time.sleep(1)

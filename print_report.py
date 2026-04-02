@@ -11,16 +11,16 @@ def get_report(handler):
     print(f'\nSuspicious files found : {sus_files_length}')
     print('===========================================')
     if sus_files_length > 0:
-        print('Idx   type    path         program \n')
+        print('Idx  type    path\n')
         for key, val in sus_files.items():
-            print(f'{key} {val['type']}  {val['path']}          {val['program']}')
+            print(f'{key}    {val['type']}     {val['path']}')
 
     if handler.sus_events:
         print(f'\nSuspicious Events : {len(handler.sus_events)}')
         print('===========================================')
-        print('Idx    reason            description \n')
+        print('Idx    reason                 description \n')
         for idx, (key, val) in enumerate(handler.sus_events.items()):
-            print(f'{idx}      {key}        {val}')
+            print(f'{idx}      {key}           {val}')
 
     files_per_dir = walk_dirs(folders)
     print(f'\n\nFolders created : {folders_length}')
@@ -28,7 +28,7 @@ def get_report(handler):
     if folders_length > 0 :
         print('Idx  count   path\n')
         for idx, (key, val) in enumerate(files_per_dir.items()):
-           print(f'{idx}  {val}  {key}')
+           print(f'{idx}    {val}     {key}')
 
     print(f'\n\nNew files in main installation dir : {handler.files_created_main}')
     print('===========================================')  
