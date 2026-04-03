@@ -23,7 +23,10 @@ SAFE_TEMP_EXTS = [
 
 
 os_paths = {'\\Windows\\Temp': SAFE_TEMP_EXTS,
-    
+            
+             ## STARTUP FOLDER 
+            '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup': [],
+        
             'ProgramData\\Microsoft\\Windows\\Start Menu\\Programs': ['lnk'],
             '\\ProgramData\\Microsoft\\Windows\\AppRepository\\': ['pckgdep', 'rslc', 'xml'],
     

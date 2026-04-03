@@ -90,7 +90,7 @@ class Handler(FileSystemEventHandler):
                     if self.ext in SUSPICIOUS_EXTS:
                         self.handle_sus()
 
-                    else: 
+                    else:  ### Add even if not necessarily harmful to show activity outside of main
                         self.written_paths.add(self.path) 
                         
 
