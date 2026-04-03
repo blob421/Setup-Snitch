@@ -8,10 +8,9 @@ import os
 
 
 def get_program_path():
-    print('Enter the setup installation path')
-    install_dir = input("E.g. (C:\\ProgramFiles\\newapp) : ")
-    return install_dir
-
+    print('Enter the setup filename')
+    setup_name = input("E.g. setup.exe : ")
+    return setup_name
 
 
 print('\nWELCOME TO SETUP SNITCH')
@@ -28,7 +27,8 @@ observer.start()
 
 
 try:
-
+    print('\nWatcher starting ...')
+    print('Press "ctrl + c" when you are done to print your report')
     while True:
         time.sleep(1)
         observer.join(1)

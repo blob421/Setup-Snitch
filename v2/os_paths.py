@@ -1,33 +1,4 @@
-
-SAFE_TEMP_EXTS = [
-    # Windows noise / housekeeping
-    "tmp", "temp", "log", "etl", "blf", "regtrans-ms",
-    "dmp", "mdmp", "hdmp",
-
-    # Installer / updater noise
-    "cab", "msi", "msp", "bak", "old", "manifest",
-    "cat", "mum", "psf", "sqm",
-
-    # Browser & app caches
-    "crdownload", "part", "dat", "sqlite", "sqlite-shm",
-    "sqlite-wal", "json", "txt", "ini", "cfg", "cache",
-    "ico", "png", "jpg", "gif",
-
-    # AppX / UWP deployment
-    "pri", "appx", "appxsym", "appxblockmap",
-    "appxsignature", "xml",
-
-    # Windows Search / indexing
-    "edb", "jrs", "chk"
-]
-
-
-os_paths = {'\\Windows\\Temp': SAFE_TEMP_EXTS,
-    
-            'ProgramData\\Microsoft\\Windows\\Start Menu\\Programs': ['lnk'],
-            '\\ProgramData\\Microsoft\\Windows\\AppRepository\\': ['pckgdep', 'rslc', 'xml'],
-    
-            '\\AppData\\Local\\Microsoft\\' :  ['loggz', 'odlgz', 'json', 'dat', 'tmp', 'log', 
+os_paths = {'\\AppData\\Local\\Microsoft\\' :  ['loggz', 'odlgz', 'json', 'dat', 'tmp', 'log', 
                                                 'ini', 'xml', 'txt','db', 'sqlite', 'vscdb','png', 
                                                 'jpg', 'jpeg', 'TMP' ,'ldb', 'sst', '', 
                                                 'tbres', 'bin'], 
@@ -40,7 +11,7 @@ os_paths = {'\\Windows\\Temp': SAFE_TEMP_EXTS,
                                          
             '\\AppData\\Local\\Packages\\' : ['json', 'dat', 'tmp', 'log','xml', 'ini', 'txt',
                                               'db', 'sqlite','png', 'jpg', 'jpeg', 'db-wal', 
-                                              'db-shm', 'bin', 'bak', 'TMP', 'lock'],
+                                              'db-shm', 'bin', 'bak', 'TMP'],
 
             '\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\': ['tmp', 'dmp', 'wer'],
             '\\ProgramData\\Microsoft' : ["dat"],

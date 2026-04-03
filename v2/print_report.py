@@ -30,15 +30,14 @@ def get_report(handler):
         for idx, (key, val) in enumerate(files_per_dir.items()):
            print(f'{idx}    {val}     {key}')
 
-    print(f'\n\nNew files in main installation dir : {handler.files_created_main}')
-    print('===========================================')  
 
-    outside  = handler.written_paths
-    print(f'\n\nFiles created outside of main (all processes):')
+
+    outside  = walk_dirs(handler.written_paths)
+    print(f'\n\nFiles created outside of main :')
     print('===========================================')
     if len(outside) > 0:
-        print('Idx  path\n')
-        for idx, val in enumerate(outside):
+        print('Idx  count   path\n')
+        for idx, (key, val) in enumerate(outside.items()):
 
-            print(f' {idx}    {val}')
+            print(f' {idx}    {val}     {key}')
 
