@@ -1,78 +1,54 @@
 
-SAFE_TEMP_EXTS = [
-    # Windows noise / housekeeping
-    "tmp", "temp", "log", "etl", "blf", "regtrans-ms",
-    "dmp", "mdmp", "hdmp",
-
-    # Installer / updater noise
-    "cab", "msi", "msp", "bak", "old", "manifest",
-    "cat", "mum", "psf", "sqm",
-
-    # Browser & app caches
-    "crdownload", "part", "dat", "sqlite", "sqlite-shm",
-    "sqlite-wal", "json", "txt", "ini", "cfg", "cache",
-    "ico", "png", "jpg", "gif",
-
-    # AppX / UWP deployment
-    "pri", "appx", "appxsym", "appxblockmap",
-    "appxsignature", "xml",
-
-    # Windows Search / indexing
-    "edb", "jrs", "chk"
-]
-
-
-os_paths = {'\\Windows\\Temp': SAFE_TEMP_EXTS,
-            
-             ## STARTUP FOLDER 
-            '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup': [],
-        
-            'ProgramData\\Microsoft\\Windows\\Start Menu\\Programs': ['lnk'],
-            '\\ProgramData\\Microsoft\\Windows\\AppRepository\\': ['pckgdep', 'rslc', 'xml'],
-    
-            '\\AppData\\Local\\Microsoft\\' :  ['loggz', 'odlgz', 'json', 'dat', 'tmp', 'log', 
-                                                'ini', 'xml', 'txt','db', 'sqlite', 'vscdb','png', 
-                                                'jpg', 'jpeg', 'TMP' ,'ldb', 'sst', '', 
-                                                'tbres', 'bin'], 
-
-            '\\AppData\\Local\\D3DSCache\\': ['bin', 'dat', 'tmp', 'dxcache-wal', 'dxcache-shm'],
-
-            '\\AppData\\Local\\Temp\\': ['tmp', 'temp', 'log','json', 'txt','dat', 'bin',
-                                         'cab', 'msi', 'manifest','htm', 'html','png', 'jpg', 
-                                         'jpeg', 'xml'],
-                                         
-            '\\AppData\\Local\\Packages\\' : ['json', 'dat', 'tmp', 'log','xml', 'ini', 'txt',
-                                              'db', 'sqlite','png', 'jpg', 'jpeg', 'db-wal', 
-                                              'db-shm', 'bin', 'bak', 'TMP', 'lock'],
-
-            '\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\': ['tmp', 'dmp', 'wer'],
-            '\\ProgramData\\Microsoft' : ["dat"],
-
-            '\\ProgramData\\regid.1991-06.com.microsoft\\': ['xml', 'xrm-ms', 'dat'],
-
-            '\\System32': ['log', 'blf', 'regtrans-ms', 'etl'],
-}
 
 SUSPICIOUS_EXTS = [
-    # Executables
-    'exe', 'dll', 'sys', 'drv', 'ocx',
-
-    # Scripts
-    'bat', 'cmd', 'ps1', 'psm1', 'vbs', 'vbe',
-    'js', 'jse', 'wsf', 'wsh',
-
-    # Installers / archives
-    'msi', 'msp', 'cab', 'pkg',
-
-    # Droppers / payloads
-    'scr', 'pif', 'com', 'jar',
-
-    # Python (rare outside dev)
-    'py', 'pyc', 'pyo',
-
-    # Office macro formats
-    'docm', 'xlsm', 'pptm',
-
-    # Shellcode containers
-    'bin', 'dat'  # only suspicious outside known OS folders
+    # Executables                       # Scripts
+     'exe', 'dll', 'sys', 'drv', 'ocx', 'bat', 'cmd', 'ps1', 'psm1', 'vbs', 'vbe',
+     'js', 'jse', 'wsf', 'wsh',
+    # Installers / archives    # Droppers / payloads        # Python (rare outside dev)
+    'msi', 'msp', 'cab', 'pkg', 'scr', 'pif', 'com', 'jar', 'py', 'pyc', 'pyo',
+    # Office macro formats # Shellcode containers
+    'docm', 'xlsm', 'pptm', 'bin', 'dat' 
 ]
+
+EXCEPTIONS_BY_PATH = ({ '\\Windows\\Temp': ['msi', 'msp', 'cab', 'dat'], 
+                        '\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup': [], 
+                        'ProgramData\\Microsoft\\Windows\\Start Menu\\Programs': [], 
+                        '\\ProgramData\\Microsoft\\Windows\\AppRepository\\': [], 
+                        '\\AppData\\Local\\Microsoft\\': ['bin', 'dat'], 
+                        '\\AppData\\Local\\D3DSCache\\': ['bin', 'dat'], 
+                        '\\AppData\\Local\\Temp\\': ['msi', 'cab', 'bin', 'dat'], 
+                        '\\AppData\\Local\\Packages\\': ['bin', 'dat'], 
+                        '\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\': [],
+                        '\\ProgramData\\Microsoft': ['dat'], 
+                        '\\ProgramData\\regid.1991-06.com.microsoft\\': ['dat'], 
+                        '\\System32': [],
+                        '\\C:\\ProgramData\\Mozilla': ['bin', 'sqlite'],
+                        '\\AppData\\Roaming\\Mozilla\\Firefox' : ['js', 'json']
+                        }
+                        )
+
+
+
+
+
+### *** Used to build my exceptions list 
+"""exceptions_by_path = {}
+def find_match():
+    global copy, exceptions_by_path
+    allowed_by_path = os_paths.copy()
+
+    for key, val in allowed_by_path.items():
+        exts = SUSPICIOUS_EXTS.copy()
+        allowed_by_path[key] = exts
+    
+    for bad_ext in SUSPICIOUS_EXTS:
+        for key, val in os_paths.items():
+
+            if not exceptions_by_path.get(key):
+                exceptions_by_path[key] = []
+
+            if val and bad_ext in val:
+                 allowed_by_path[key].remove(bad_ext)
+                 exceptions_by_path[key].append(bad_ext)"""
+ 
+

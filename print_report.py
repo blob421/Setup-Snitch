@@ -20,13 +20,13 @@ def get_report(handler):
         print('===========================================')
         print('Idx    reason                 description \n')
         for idx, (key, val) in enumerate(handler.sus_events.items()):
-            print(f'{idx}      {key}           {val}')
+            print(f'{idx}      {key}         {val}')
 
     files_per_dir = walk_dirs(folders)
     print(f'\n\nFolders created : {folders_length}')
     print('===========================================')    
     if folders_length > 0 :
-        print('Idx  count   path\n')
+        print('Idx  file_count           path\n')
         for idx, (key, val) in enumerate(files_per_dir.items()):
            print(f'{idx}    {val}     {key}')
 

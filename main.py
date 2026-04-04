@@ -7,21 +7,18 @@ from event_handler import Handler
 import os        
 
 
-def get_program_path():
-    print('Enter the setup installation path')
-    install_dir = input("E.g. (C:\\ProgramFiles\\newapp) : ")
-    return install_dir
+
 
 
 
 print('\nWELCOME TO SETUP SNITCH')
 print('=======================\n')
 
-PROGRAM_PATH = get_program_path()
+
 
 observer = Observer()
 observed_path = 'C:\\'
-handler = Handler(PROGRAM_PATH)
+handler = Handler()
 
 observer.schedule(handler, observed_path, recursive=True)
 observer.start()
