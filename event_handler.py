@@ -45,7 +45,7 @@ class Handler(FileSystemEventHandler):
         path = event.src_path
         if "System32\\drivers\\etc\\hosts" in path:
             self.sus_events['hosts modified'] = (
-            'The hosts file was modified. This can be used to block or redirect internet access.'
+            "The hosts file was modified. It’s often caused by a browser, but still worth checking ."
     )
 
               

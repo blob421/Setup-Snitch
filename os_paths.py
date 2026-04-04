@@ -23,7 +23,10 @@ EXCEPTIONS_BY_PATH = ({ '\\Windows\\Temp': ['msi', 'msp', 'cab', 'dat'],
                         '\\ProgramData\\regid.1991-06.com.microsoft\\': ['dat'], 
                         '\\System32': [],
                         '\\C:\\ProgramData\\Mozilla': ['bin', 'sqlite'],
-                        '\\AppData\\Roaming\\Mozilla\\Firefox' : ['js', 'json']
+                        '\\AppData\\Roaming\\Mozilla\\Firefox' : ['js', 'json'],
+                        'C:\\Windows\\SoftwareDistribution\\Download\\': ["exe"],
+                        'C:\\ProgramData\\Microsoft\\Windows Defender\\Definition Updates\\':['dll'],
+                        'C:\\ProgramData\\Microsoft\\Windows Defender\Scans\\': ['bin']
                         }
                         )
 
